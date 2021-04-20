@@ -1,6 +1,12 @@
+/************************************************************************************
+ * C++ course, Ariel university.
+ *
+ * AUTHORS: Noya Gendelman
+ * Date: 2021-04
+ ***********************************************************************************/
+
 #include <iostream>
 #include <string>
-#include <utility>
 #include <iostream>
 
 namespace ariel{
