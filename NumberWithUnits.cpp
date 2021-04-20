@@ -1,8 +1,7 @@
 /************************************************************************************
  * C++ course, Ariel university.
  *
- * AUTHORS: Noya Gendelman
- * Date: 2021-04
+ * Authots: Noya Gendelman
  ***********************************************************************************/
 
 #include "NumberWithUnits.hpp"
