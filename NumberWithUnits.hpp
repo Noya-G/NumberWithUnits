@@ -1,12 +1,9 @@
-/************************************************************************************
- * C++ course, Ariel university.
- *
- * Authots: Noya Gendelman
- ***********************************************************************************/
-
 #include <iostream>
 #include <string>
-#include <iostream>
+#include <utility>
+#include <fstream>
+#include <sstream>
+
 
 namespace ariel{
     class NumberWithUnits
@@ -15,15 +12,17 @@ namespace ariel{
         std::string unit;
         double num;
     public:
-        NumberWithUnits(std::string unit);
         NumberWithUnits(double num, std::string unit);
+        NumberWithUnits(const NumberWithUnits& n);
         ~NumberWithUnits();
+        static void read_units(std::ifstream& units_file);
 
         //===============================================================
         //Arithmetic Operators===========================================
         NumberWithUnits& operator+ (const NumberWithUnits& nwu);
         NumberWithUnits& operator+= (const NumberWithUnits& nwu);
         NumberWithUnits& operator+ ();
+        friend NumberWithUnits operator+(double number,const NumberWithUnits &nwu);
         NumberWithUnits& operator- (const NumberWithUnits& nwu);
         NumberWithUnits& operator-= (const NumberWithUnits& nwu);
         NumberWithUnits& operator- () ;
@@ -32,40 +31,48 @@ namespace ariel{
 
         //===============================================================
         //Compartion Operators===========================================
-        bool operator< (const NumberWithUnits& nwu);
-        bool operator<= (const NumberWithUnits& nwu);
-        bool operator> (const NumberWithUnits& nwu);
-        bool operator>= (const NumberWithUnits& nwu);
-        bool operator== (const NumberWithUnits& nwu);
-        bool operator!= (const NumberWithUnits& nwu);
+        bool operator< (const NumberWithUnits& nwu)const;
+        bool operator<= (const NumberWithUnits& nwu)const;
+        bool operator> (const NumberWithUnits& nwu)const;
+        bool operator>= (const NumberWithUnits& nwu)const;
+        bool operator== (const NumberWithUnits &nwu) const;
+        bool operator!= (const NumberWithUnits& nwu)const;
         //===============================================================
 
 
         //===============================================================
         //Prefix Operators===============================================
-        NumberWithUnits& operator-- ();
         NumberWithUnits& operator++ ();
+        NumberWithUnits& operator-- ();
         //==============================================================
 
 
         //==============================================================
         //Psotfix Operators=============================================
         NumberWithUnits& operator++ (int);
-        NumberWithUnits& operator++ (int);
+        NumberWithUnits& operator-- (int);
         //==============================================================
 
 
         //==============================================================
         //Multiplication Operators======================================
-        friend NumberWithUnits& operator* (NumberWithUnits& nwu, double num); 
-        friend NumberWithUnits& operator* (double num1, NumberWithUnits& nwu);
+        NumberWithUnits& operator* (double num1);
+        friend NumberWithUnits operator*(double number, const NumberWithUnits &nwu);
         //==============================================================
 
 
         //==============================================================
         //Stream Operators==============================================
-        std::ostream operator<< (std::ostream& os);
-        std::istream operator>> (std::istream& is);
+        friend  std::ostream& operator<<( std::ostream& os, const NumberWithUnits& nwu);
+        friend  std::istream& operator>>( std::istream &is, NumberWithUnits &nwu);
         //==============================================================
+
     };
+
+
+
+    
 }
+
+
+
