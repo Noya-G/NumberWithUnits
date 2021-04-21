@@ -1,86 +1,91 @@
-/************************************************************************************
- * C++ course, Ariel university.
- *
- * Authots: Noya Gendelman
- ***********************************************************************************/
-
 #include "NumberWithUnits.hpp"
 
-    using namespace ariel;
 
-    NumberWithUnits::NumberWithUnits(std::string unit){
-        this->num=0;
-        this->unit=unit;
-    }
+    using namespace ariel;
+    using namespace std;
+
+
     NumberWithUnits::NumberWithUnits(double num, std::string unit){
         this->num=num;
         this->unit=unit;
     }
+    NumberWithUnits::NumberWithUnits(const NumberWithUnits& n)
+    {
+        this->num=n.num;
+        this->unit=n.unit;
+    }
+    void NumberWithUnits::read_units(std::ifstream& units_file){}
+    NumberWithUnits::~NumberWithUnits(){}
+
     //===============================================================
     //Arithmetic Operators===========================================
     NumberWithUnits& NumberWithUnits::operator+ (const NumberWithUnits& nwu)
-    {return;}
+    {return *this;}
     NumberWithUnits& NumberWithUnits::operator+= (const NumberWithUnits& nwu)
-    {return;}
+    {return *this;}
     NumberWithUnits& NumberWithUnits::operator+ ()
-    {return;}
-    NumberWithUnits& operator- (const NumberWithUnits& nwu)
-    {return;}
+    {return *this;}
+    NumberWithUnits ariel::operator+(double number, const NumberWithUnits &nwu)
+    {return nwu;}
+    NumberWithUnits& NumberWithUnits::operator- (const NumberWithUnits& nwu)
+    {return *this;}
     NumberWithUnits& NumberWithUnits::operator-= (const NumberWithUnits& nwu)
-    {return;}
+    {return *this;}
     NumberWithUnits& NumberWithUnits::operator- ()
-    {return;}
+    {return *this;}
     //===============================================================
 
 
     //===============================================================
     //Compartion Operators===========================================
-    bool NumberWithUnits::operator< (const NumberWithUnits& nwu)
+    bool ariel::NumberWithUnits::operator< (const NumberWithUnits& nwu) const
     {return true;}
-    bool NumberWithUnits::operator<= (const NumberWithUnits& nwu)
+    bool ariel::NumberWithUnits::operator<= (const NumberWithUnits& nwu) const
     {return true;}
-    bool NumberWithUnits::operator> (const NumberWithUnits& nwu)
+    bool ariel::NumberWithUnits::operator> (const NumberWithUnits& nwu) const
     {return true;}
-    bool NumberWithUnits::operator>= (const NumberWithUnits& nwu)
+    bool ariel::NumberWithUnits::operator>= (const NumberWithUnits& nwu) const
     {return true;}
-    bool NumberWithUnits::operator== (const NumberWithUnits& nwu)
+    bool ariel::NumberWithUnits::operator== (const NumberWithUnits &nwu) const
     {return true;}
-    bool NumberWithUnits::operator!= (const NumberWithUnits& nwu)
+    bool ariel::NumberWithUnits::operator!= (const NumberWithUnits& nwu) const
     {return true;}
     //===============================================================
 
 
     //===============================================================
     //Prefix Operators===============================================
-    NumberWithUnits& NumberWithUnits::operator-- ()
-    {return;}
     NumberWithUnits& NumberWithUnits::operator++ ()
-    {return;}
+    {return *this;}
+    NumberWithUnits& NumberWithUnits::operator-- ()
+    {return *this;}
     //==============================================================
 
 
     //==============================================================
     //Psotfix Operators=============================================
     NumberWithUnits& NumberWithUnits::operator++ (int)
-    {return;}
-    NumberWithUnits& NumberWithUnits::operator++ (int)
-    {return;}
+    {return *this;}
+    NumberWithUnits& NumberWithUnits::operator-- (int)
+    {return *this;}
     //==============================================================
 
 
     //==============================================================
     //Multiplication Operators======================================
-    NumberWithUnits& operator* (NumberWithUnits& nwu, double num)
-    {return;}
-    NumberWithUnits& operator* (double num1, NumberWithUnits& nwu)
-    {return;}
+    NumberWithUnits& NumberWithUnits::operator* (double num1)
+    {return *this;}
+    NumberWithUnits ariel::operator*(double number, const NumberWithUnits &nwu)
+    {return nwu;}
     //==============================================================
 
 
     //==============================================================
     //Stream Operators==============================================
-    std::ostream NumberWithUnits::operator<< (std::ostream& os)
-    {return;}
-    std::istream NumberWithUnits::operator>> (std::istream& is)
-    {return;}
+    std::ostream &ariel::operator<<(std::ostream &os, const NumberWithUnits &nwu) {
+    return os;}
+
+    std::istream &ariel::operator>>(std::istream &is, NumberWithUnits &nwu) 
+    {
+    return is;}
     //==============================================================
