@@ -179,44 +179,31 @@ TEST_CASE("Prefix Operators && Psotfix Operators")
 TEST_CASE("Multiplication Operators")
 {
     //Dist-------------------------------
-    NumberWithUnits dist_test = km_7+m_5;
-    CHECK(dist_test==NumberWithUnits(7.005,"km"));
-    dist_test = km_7+cm_5;
-    CHECK(dist_test==NumberWithUnits(7.00005,"km"));
+    NumberWithUnits dist_test = 3*m_5;
+    CHECK(dist_test==NumberWithUnits(15,"km"));
+    dist_test = m_5*3;
+    CHECK(dist_test==NumberWithUnits(15,"km"));
+    dist_test = m_5*1000;
+    CHECK(dist_test==NumberWithUnits(5000,"km"));
 
     //Time-------------------------------
-    NumberWithUnits time_test = hour_4+min_4;
-    CHECK(time_test==NumberWithUnits(4.04,"hour"));
-    time_test = sec_5+min_4;
-    CHECK(time_test==NumberWithUnits(4.04,"hour"));
+    NumberWithUnits time_test = hour_4*2;
+    CHECK(time_test==NumberWithUnits(8,"hour"));
+    time_test = sec_5*2;
+    CHECK(time_test==NumberWithUnits(10,"sec"));
+    time_test = NumberWithUnits(60,"min")*2;
+    CHECK(time_test==NumberWithUnits(2,"hour"));
 
     //Weight-------------------------------
-    NumberWithUnits test8 = ton_4+kg_50;
-    CHECK(test8==NumberWithUnits(4.05,"ton"));
-    NumberWithUnits test10 = 970.0+kg_50;
-    CHECK(test8==NumberWithUnits(4.05,"ton"));
+    NumberWithUnits weight_test = ton_4*2;
+    CHECK(weight_test==NumberWithUnits(8,"ton"));
+    weight_test = ton_4*2;
+    CHECK(weight_test==NumberWithUnits(8,"ton"));
+    weight_test = 1000*NumberWithUnits(5,"kg");
+    CHECK(weight_test==NumberWithUnits(5,"ton"));
 
     //Currency----------------------------
-    NumberWithUnits test12 = USD_45+ILS_45;
-    //CHECK(test11==NumberWithUnits(58.513511351,"USD"));
-
-}
-
-
-TEST_CASE("Stream Operators")
-{
-    //Dist-------------------------------
-    std::string dist_test<<cm_5;
-    CHECK_EQ(dist_test,"");
-
-    //Time-------------------------------
-    CHECK_EQ(test11==NumberWithUnits(58.513511351,"USD"));
-
-    //Weight-------------------------------
-    CHECK_EQ(test11==NumberWithUnits(58.513511351,"USD"));
-
-    //Currency----------------------------
-    NumberWithUnits test12 = USD_45+ILS_45;
-    CHECK_EQ(test11==NumberWithUnits(58.513511351,"USD"));
+    NumberWithUnits test12 = USD_45*2;
+    CHECK(weight_test==NumberWithUnits(90,"USD"));
 
 }
