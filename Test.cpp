@@ -26,6 +26,15 @@ NumberWithUnits USD_45(45, "USD");
 NumberWithUnits ILS_45(45, "ILS");
 
 
+TEST_CASE("create a number with unit")
+{
+
+    //Exption----------------------------
+    CHECK_THROWS(NumberWithUnits(0,""));
+    CHECK_THROWS(NumberWithUnits(0,"df"));
+
+}
+
 using namespace ariel;
 TEST_CASE("Arithmetic Operators +")
 {
@@ -79,18 +88,18 @@ TEST_CASE("Arithmetic Operators +")
     CHECK(time_test==NumberWithUnits(-57,"min"));
 
     //Weight-------------------------------
-    NumberWithUnits test8 = ton_4+kg_50;
-    CHECK(test8==NumberWithUnits(4.05,"ton"));
-    NumberWithUnits test10 = 970.0+kg_50;
-    CHECK(test8==NumberWithUnits(4.05,"ton"));
-    NumberWithUnits test11 = 3.0+kg_50;
-    CHECK(test11==NumberWithUnits(53,"kg"));
-    NumberWithUnits test11 = 3.0+kg_50;
-    CHECK(test11==NumberWithUnits(53,"kg"));
+    NumberWithUnits weight_test = ton_4+kg_50;
+    CHECK(weight_test==NumberWithUnits(4.05,"ton"));
+    weight_test = 970.0+kg_50;
+    CHECK(weight_test==NumberWithUnits(4.05,"ton"));
+    weight_test = 3.0+kg_50;
+    CHECK(weight_test==NumberWithUnits(53,"kg"));
+    weight_test = 3.0+kg_50;
+    CHECK(weight_test==NumberWithUnits(53,"kg"));
 
     //Currency----------------------------
-    NumberWithUnits test12 = USD_45+ILS_45;
-    CHECK(test11==NumberWithUnits(58.513511351,"USD"));
+    NumberWithUnits currency_test = USD_45+ILS_45;
+    CHECK(currency_test==NumberWithUnits(58.513511351,"USD"));
 
     //Exption----------------------------
     CHECK_THROWS(USD_45+km_7);
@@ -106,171 +115,108 @@ TEST_CASE("Compartion Operators +")
     CHECK(m_5==NumberWithUnits(5,"m"));
     CHECK(m_5==NumberWithUnits(500,"cm"));
     CHECK(m_5==NumberWithUnits(500,"cm"));
+    CHECK(km_7==NumberWithUnits(7000,"m"));
+    CHECK(m_5<=NumberWithUnits(5,"m"));
+    CHECK_EQ(m_5<=NumberWithUnits(5,"m"),true);
+    CHECK_FALSE(m_5<=NumberWithUnits(400,"cm"));
+    CHECK_FALSE(m_5<=NumberWithUnits(5,"km"));
+    CHECK_FALSE(m_5>NumberWithUnits(5,"km"));
 
     //Time-------------------------------
-   
+    CHECK(hour_4==NumberWithUnits(4,"hour"));
+    CHECK(hour_4==NumberWithUnits(240,"min"));
+    CHECK(min_4==NumberWithUnits(240,"sec"));
+    CHECK(hour_4<=NumberWithUnits(250,"min"));
+    CHECK_EQ(hour_4<=NumberWithUnits(4,"hour"),true);
+    CHECK_FALSE(min_4>=NumberWithUnits(240,"sec"));
+    CHECK_FALSE(min_4!=NumberWithUnits(5,"hour"));
 
     //Weight-------------------------------
-   
+    CHECK(kg_50==NumberWithUnits(50,"kg"));
+    CHECK(kg_50==NumberWithUnits(0.05,"ton"));
+    CHECK(min_4==NumberWithUnits(240,"sec"));
+    CHECK(NumberWithUnits(7,"g")<=NumberWithUnits(250,"g"));
+    CHECK_EQ(NumberWithUnits(4000,"g")<=NumberWithUnits(4,"kg"),true);
+    CHECK_FALSE(ton_4>=NumberWithUnits(240,"kg"));
+    CHECK_FALSE(ton_4!=NumberWithUnits(5,"kg"));
+
     //Currency----------------------------
-    
-    //Exption----------------------------
-    CHECK_THROWS(USD_45==km_7);
-    CHECK_THROWS(min_4==km_7);
-    CHECK_THROWS(kg_50==km_7);
+    CHECK(USD_45==NumberWithUnits(45,"USD"));
+    CHECK(USD_45==NumberWithUnits(149.84,"ILS"));
+    CHECK_EQ(NumberWithUnits(7,"USD")<=NumberWithUnits(250,"ILS"),true);
+    CHECK_EQ(NumberWithUnits(4000,"g")<=NumberWithUnits(4,"kg"),true);
+    CHECK_FALSE(USD_45>=NumberWithUnits(1000,"ILS"));
+    CHECK_FALSE(USD_45!=NumberWithUnits(5,"USD"));
 }
 
 
-TEST_CASE("Prefix Operators")
+TEST_CASE("Prefix Operators && Psotfix Operators")
 {
     //Dist-------------------------------
-    NumberWithUnits test1 = km_7+m_5;
-    CHECK(test1==NumberWithUnits(7.005,"km"));
-    NumberWithUnits test2 = km_7+cm_5;
-    CHECK(test2==NumberWithUnits(7.00005,"km"));
-    NumberWithUnits test3 = cm_5+m_5;
-    CHECK(test3==NumberWithUnits(5.05,"m"));
-    NumberWithUnits test4 = cm_5+m_5;
-    CHECK(test4==NumberWithUnits(5.05,"m"));
+    CHECK_EQ(cm_5++,NumberWithUnits(6,"cm"));
+    CHECK_EQ(m_5++,NumberWithUnits(6,"m"));
+    CHECK_EQ(km_7++,NumberWithUnits(8,"km"));
+    CHECK_EQ(NumberWithUnits(99,"m"),NumberWithUnits(1,"km"));
 
     //Time-------------------------------
-    NumberWithUnits test5 = hour_4+min_4;
-    CHECK(test5==NumberWithUnits(4.04,"hour"));
-    NumberWithUnits test6 = sec_5+min_4;
-    CHECK(test6==NumberWithUnits(4.04,"hour"));
-    NumberWithUnits test7 = 59.0+min_4;
-    CHECK(test7==NumberWithUnits(1.05,"hour"));
+    CHECK_EQ(sec_5++,NumberWithUnits(6,"sec"));
+    CHECK_EQ(min_4,NumberWithUnits(5,"min"));
+    CHECK_EQ(hour_4++,NumberWithUnits(5,"hour"));
+    CHECK_EQ(NumberWithUnits(59,"min"),NumberWithUnits(1,"hour"));
 
     //Weight-------------------------------
-    NumberWithUnits test8 = ton_4+kg_50;
-    CHECK(test8==NumberWithUnits(4.05,"ton"));
-    NumberWithUnits test10 = 970.0+kg_50;
-    CHECK(test8==NumberWithUnits(4.05,"ton"));
-    NumberWithUnits test11 = 3.0+kg_50;
-    CHECK(test11==NumberWithUnits(53,"kg"));
+    CHECK_EQ(NumberWithUnits(5,"g"),NumberWithUnits(6,"g"));
+    CHECK_EQ(kg_50++,NumberWithUnits(51,"kg"));
+    CHECK_EQ(NumberWithUnits(999,"kg")++,NumberWithUnits(1,"ton"));
+    CHECK_EQ(NumberWithUnits(999,"g"),NumberWithUnits(1,"kg"));
 
     //Currency----------------------------
-    NumberWithUnits test12 = USD_45+ILS_45;
-    CHECK(test11==NumberWithUnits(58.513511351,"USD"));
-
-    //Exption----------------------------
-    CHECK_THROWS(USD_45+km_7);
-    CHECK_THROWS(min_4+km_7);
-    CHECK_THROWS(kg_50+km_7);
-}
-
-TEST_CASE("Psotfix Operators")
-{
-    //Dist-------------------------------
-    NumberWithUnits test1 = km_7+m_5;
-    CHECK(test1==NumberWithUnits(7.005,"km"));
-    NumberWithUnits test2 = km_7+cm_5;
-    CHECK(test2==NumberWithUnits(7.00005,"km"));
-    NumberWithUnits test3 = cm_5+m_5;
-    CHECK(test3==NumberWithUnits(5.05,"m"));
-    NumberWithUnits test4 = cm_5+m_5;
-    CHECK(test4==NumberWithUnits(5.05,"m"));
-
-    //Time-------------------------------
-    NumberWithUnits test5 = hour_4+min_4;
-    CHECK(test5==NumberWithUnits(4.04,"hour"));
-    NumberWithUnits test6 = sec_5+min_4;
-    CHECK(test6==NumberWithUnits(4.04,"hour"));
-    NumberWithUnits test7 = 59.0+min_4;
-    CHECK(test7==NumberWithUnits(1.05,"hour"));
-
-    //Weight-------------------------------
-    NumberWithUnits test8 = ton_4+kg_50;
-    CHECK(test8==NumberWithUnits(4.05,"ton"));
-    NumberWithUnits test10 = 970.0+kg_50;
-    CHECK(test8==NumberWithUnits(4.05,"ton"));
-    NumberWithUnits test11 = 3.0+kg_50;
-    CHECK(test11==NumberWithUnits(53,"kg"));
-
-    //Currency----------------------------
-    NumberWithUnits test12 = USD_45+ILS_45;
-    CHECK(test11==NumberWithUnits(58.513511351,"USD"));
-
-    //Exption----------------------------
-    CHECK_THROWS(USD_45+km_7);
-    CHECK_THROWS(min_4+km_7);
-    CHECK_THROWS(kg_50+km_7);
+    CHECK_EQ(ILS_45++,NumberWithUnits(46,"ILS"));
+    CHECK_EQ(USD_45++,NumberWithUnits(46,"USD"));
 }
 
 
 TEST_CASE("Multiplication Operators")
 {
     //Dist-------------------------------
-    NumberWithUnits test1 = km_7+m_5;
-    CHECK(test1==NumberWithUnits(7.005,"km"));
-    NumberWithUnits test2 = km_7+cm_5;
-    CHECK(test2==NumberWithUnits(7.00005,"km"));
-    NumberWithUnits test3 = cm_5+m_5;
-    CHECK(test3==NumberWithUnits(5.05,"m"));
-    NumberWithUnits test4 = cm_5+m_5;
-    CHECK(test4==NumberWithUnits(5.05,"m"));
+    NumberWithUnits dist_test = km_7+m_5;
+    CHECK(dist_test==NumberWithUnits(7.005,"km"));
+    dist_test = km_7+cm_5;
+    CHECK(dist_test==NumberWithUnits(7.00005,"km"));
 
     //Time-------------------------------
-    NumberWithUnits test5 = hour_4+min_4;
-    CHECK(test5==NumberWithUnits(4.04,"hour"));
-    NumberWithUnits test6 = sec_5+min_4;
-    CHECK(test6==NumberWithUnits(4.04,"hour"));
-    NumberWithUnits test7 = 59.0+min_4;
-    CHECK(test7==NumberWithUnits(1.05,"hour"));
+    NumberWithUnits time_test = hour_4+min_4;
+    CHECK(time_test==NumberWithUnits(4.04,"hour"));
+    time_test = sec_5+min_4;
+    CHECK(time_test==NumberWithUnits(4.04,"hour"));
 
     //Weight-------------------------------
     NumberWithUnits test8 = ton_4+kg_50;
     CHECK(test8==NumberWithUnits(4.05,"ton"));
     NumberWithUnits test10 = 970.0+kg_50;
     CHECK(test8==NumberWithUnits(4.05,"ton"));
-    NumberWithUnits test11 = 3.0+kg_50;
-    CHECK(test11==NumberWithUnits(53,"kg"));
 
     //Currency----------------------------
     NumberWithUnits test12 = USD_45+ILS_45;
-    CHECK(test11==NumberWithUnits(58.513511351,"USD"));
+    //CHECK(test11==NumberWithUnits(58.513511351,"USD"));
 
-    //Exption----------------------------
-    CHECK_THROWS(USD_45+km_7);
-    CHECK_THROWS(min_4+km_7);
-    CHECK_THROWS(kg_50+km_7);
 }
 
 
 TEST_CASE("Stream Operators")
 {
     //Dist-------------------------------
-    NumberWithUnits test1 = km_7+m_5;
-    CHECK(test1==NumberWithUnits(7.005,"km"));
-    NumberWithUnits test2 = km_7+cm_5;
-    CHECK(test2==NumberWithUnits(7.00005,"km"));
-    NumberWithUnits test3 = cm_5+m_5;
-    CHECK(test3==NumberWithUnits(5.05,"m"));
-    NumberWithUnits test4 = cm_5+m_5;
-    CHECK(test4==NumberWithUnits(5.05,"m"));
+    std::string dist_test<<cm_5;
+    CHECK_EQ(dist_test,"");
 
     //Time-------------------------------
-    NumberWithUnits test5 = hour_4+min_4;
-    CHECK(test5==NumberWithUnits(4.04,"hour"));
-    NumberWithUnits test6 = sec_5+min_4;
-    CHECK(test6==NumberWithUnits(4.04,"hour"));
-    NumberWithUnits test7 = 59.0+min_4;
-    CHECK(test7==NumberWithUnits(1.05,"hour"));
+    CHECK_EQ(test11==NumberWithUnits(58.513511351,"USD"));
 
     //Weight-------------------------------
-    NumberWithUnits test8 = ton_4+kg_50;
-    CHECK(test8==NumberWithUnits(4.05,"ton"));
-    NumberWithUnits test10 = 970.0+kg_50;
-    CHECK(test8==NumberWithUnits(4.05,"ton"));
-    NumberWithUnits test11 = 3.0+kg_50;
-    CHECK(test11==NumberWithUnits(53,"kg"));
+    CHECK_EQ(test11==NumberWithUnits(58.513511351,"USD"));
 
     //Currency----------------------------
     NumberWithUnits test12 = USD_45+ILS_45;
-    CHECK(test11==NumberWithUnits(58.513511351,"USD"));
+    CHECK_EQ(test11==NumberWithUnits(58.513511351,"USD"));
 
-    //Exption----------------------------
-    CHECK_THROWS(USD_45+km_7);
-    CHECK_THROWS(min_4+km_7);
-    CHECK_THROWS(kg_50+km_7);
 }
